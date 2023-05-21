@@ -1,0 +1,30 @@
+npm install express --save
+
+# Create a simple Node.js app
+# Define .dockerignore and Dockerfile
+
+# Create the Docker image
+docker build -t simple-node .
+
+docker run --rm -p 3000:3000 simple-node
+
+# Get and run the app from a container registry:
+docker run -d --name kuard --publish 8080:8080 gcr.io/kuar-demo/kuard-amd64:blue
+
+curl http://localhost:8080
+
+docker stop kuard
+
+# Add limits
+docker rm kuard  
+docker run -d --name kuard --publish 8080:8080 \
+--memory 200m \
+--memroy-swap \
+--cpu-shares 1024 \
+1G gcr.io/kuar-demo/kuard-amd64:blue
+
+# Remove the image
+docker images
+docker rmi <tag-name>
+# or
+docker rmi <image-id>
